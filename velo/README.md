@@ -40,28 +40,26 @@ Acesse: `http://localhost:5173`
 
 ### Playwright
 
+Testes em `playwright/e2e/`. Use sempre os scripts do projeto (nunca o `playwright` global).
+
 ```bash
-# 1. Inicializa no projeto (cria tests/, playwright.config.ts e dependências)
-yarn create playwright
+# Instalar browsers (se ainda não instalou)
+yarn playwright install
 
-# 2. Baixa browsers (Chromium, Firefox, WebKit) — se o create não pediu
-PLAYWRIGHT_BROWSERS_PATH="$HOME/Library/Caches/ms-playwright" yarn playwright install
-
-# 3. Verificar instalação
-yarn playwright --version
+# Rodar testes
+yarn test:e2e              # headless
+yarn test:e2e:headed       # com browser visível
+yarn test:e2e:ui           # modo interativo
+yarn test:e2e:report       # último relatório HTML
 ```
 
-Browsers ficam em: `~/Library/Caches/ms-playwright`
-
-Comandos úteis:
+Outros:
 
 ```bash
-yarn playwright test                        # Roda os testes end-to-end
-yarn playwright test --ui                   # Abre o modo interativo (UI)
-yarn playwright test --project=chromium     # Roda só no Chromium
-yarn playwright test example                # Roda os testes de um arquivo específico
-yarn playwright test --debug                # Roda os testes em modo debug
-yarn playwright codegen                     # Gera testes automaticamente com Codegen
+yarn playwright test --project=chromium
+yarn playwright test example
+yarn playwright test --debug
+yarn playwright codegen
 ```
 
 ---
