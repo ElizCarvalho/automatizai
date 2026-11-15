@@ -15,6 +15,10 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
 
   // Act (When) = Executar a ação
   await page.getByTestId('search-order-id').fill('VLO-P5VBLX')
+  //await page.locator('//label[text()="Número do Pedido"]/../input').fill('VLO-P5VBLX') //xpath para buscar o elemento
+  //await page.getByRole('textbox', { name: 'Número do Pedido' }).fill('VLO-P5VBLX') //buscar o elemento pelo nome do label
+  //await page.getByLabel('Número do Pedido').fill('VLO-P5VBLX') //buscar o elemento pelo label
+  //await page.getByPlaceholder('Ex:VLO-ABC123').fill('VLO-P5VBLX') //buscar o elemento pelo placeholder
   await page.getByTestId('search-order-button').click()
 
   // Assert (Then) = Verificar o resultado
