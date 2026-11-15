@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { generateOrderCode } from '../support/helpers'
+
 
 //teste gerado com ajuda do codegen ($ yarn playwright codegen http://localhost:5173/)
 //podemos executar o teste com o comando: $ yarn playwright test pedidos.spec.ts
@@ -56,7 +58,7 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
 test('deve exibir mensagem quando o pedido nao for encontrado', async ({ page }) => {
   
   // Arrange (Given) = Preparar o teste
-  const orderId = 'VLO-ABC123'
+  const orderId = generateOrderCode()
   await page.goto('http://localhost:5173/')
   await expect(page.getByTestId('hero-section').getByRole('heading')).toContainText('Velô Sprint') //Checkpoint
   
