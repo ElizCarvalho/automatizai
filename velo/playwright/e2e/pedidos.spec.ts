@@ -38,4 +38,17 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
   await expect(card.getByText(orderId, { exact: true })).toBeVisible()
   await expect(card.getByText('APROVADO', { exact: true })).toBeVisible()
 
+  //RESPOSTA DO PROFESSOR PARA O DESAFIO
+  const orderCodeLocator = page.locator('//p[text()="Pedido"]/..//p[text()="VLO-P5VBLX"]')
+  await expect(orderCodeLocator).toBeVisible(); //xpath para buscar o elemento
+
+  const containerPedido = page.getByRole('paragraph').filter({ hasText: /^Pedido$/ }).locator('..') //.. sobe para o elemento pai
+  await expect(containerPedido).toContainText("VLO-P5VBLX", {timeout: 10_000});
+
+  const statusLocator = page.locator('//p[text()="Pedido"]/../../..').getByText('APROVADO', { exact: true })
+  await expect(statusLocator).toBeVisible()
+
+  const containerStatus = containerPedido.locator('..').locator('..')
+  await expect(containerStatus).toContainText('APROVADO')
+
 })
