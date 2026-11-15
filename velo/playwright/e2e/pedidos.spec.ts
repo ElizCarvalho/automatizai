@@ -52,3 +52,33 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
   await expect(containerStatus).toContainText('APROVADO')
 
 })
+
+test('deve exibir mensagem quando o pedido nao for encontrado', async ({ page }) => {
+  
+  // Arrange (Given) = Preparar o teste
+  const orderId = 'VLO-ABC123'
+  await page.goto('http://localhost:5173/')
+  await expect(page.getByTestId('hero-section').getByRole('heading')).toContainText('Velô Sprint') //Checkpoint
+  
+  await page.getByRole('link', { name: 'Consultar Pedido' }).click()
+  await expect(page.getByRole('heading')).toContainText('Consultar Pedido') //Checkpoint
+
+  // Act (When) = Executar a ação
+  await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(orderId)
+  await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+
+  // Assert (Then) = Verificar o resultado
+  const titleLocator = page.getByRole('heading', { name: 'Pedido não encontrado', level: 3 }) //level=3 busca e valida como 'h3'
+  await expect(titleLocator).toBeVisible()
+
+  const messageLocator = page.locator('p', { hasText: 'Verifique o número do pedido e tente novamente' })
+  await expect(messageLocator).toBeVisible()
+
+  //Usando o codegen para gerar o snapshot para validar o bloco de codigo da pagina
+  await expect(page.locator('#root')).toMatchAriaSnapshot(`
+    - img
+    - heading "Pedido não encontrado" [level=3]
+    - paragraph: Verifique o número do pedido e tente novamente
+    `);
+
+})
