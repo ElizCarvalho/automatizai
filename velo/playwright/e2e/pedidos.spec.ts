@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test'
 
+//teste gerado com ajuda do codegen ($ yarn playwright codegen http://localhost:5173/)
 test('deve consultar um pedido aprovado', async ({ page }) => {
-
-  //teste gerado com ajuda do codegen ($ yarn playwright codegen http://localhost:5173/)
 
   // Arrange (Given) = Preparar o teste
   await page.goto('http://localhost:5173/')
