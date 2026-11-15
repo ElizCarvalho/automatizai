@@ -1,0 +1,19 @@
+---
+description: Playwright e2e specs must omit semicolons (ASI style)
+globs: velo/playwright/**/*.{ts,js}
+alwaysApply: false
+---
+
+# Playwright: sem ponto e vírgula
+
+Ao gerar ou editar testes automatizados em `velo/playwright/`, **não usar `;`** no final das statements. Seguir o estilo ASI do projeto (como em `online.spec.ts`).
+
+```typescript
+// ❌ BAD
+import { test, expect } from '@playwright/test';
+await page.goto('http://localhost:5173/');
+
+// ✅ GOOD
+import { test, expect } from '@playwright/test'
+await page.goto('http://localhost:5173/')
+```
