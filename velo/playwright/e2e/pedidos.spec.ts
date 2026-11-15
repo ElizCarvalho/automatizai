@@ -22,7 +22,9 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
   await page.getByTestId('search-order-button').click()
 
   // Assert (Then) = Verificar o resultado
-  await expect(page.getByTestId('order-result-id')).toBeVisible()
+
+  //await page.waitForTimeout(10000) //PESSIMO e NAO USAR ASSIM: aguarda 10 segundos para verificar o resultado e com isso o teste fica lento
+  await expect(page.getByTestId('order-result-id')).toBeVisible({ timeout: 10_000 }) //USAR ASSIM: pode aguardar até 10 segundos para encontrar o elemento
   await expect(page.getByTestId('order-result-id')).toContainText('VLO-P5VBLX')
   await expect(page.getByTestId('order-result-status')).toBeVisible()
   await expect(page.getByTestId('order-result-status')).toContainText('APROVADO')
