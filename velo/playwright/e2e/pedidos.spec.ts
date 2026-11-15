@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test'
 
 //teste gerado com ajuda do codegen ($ yarn playwright codegen http://localhost:5173/)
+//podemos executar o teste com o comando: $ yarn playwright test pedidos.spec.ts
+//ou com o comando: $ yarn playwright test pedidos.spec.ts --headed
+//ou com o comando: $ yarn playwright test pedidos.spec.ts --ui
+//ou com o comando: $ yarn playwright test pedidos.spec.ts --debug
 test('deve consultar um pedido aprovado', async ({ page }) => {
 
   // Arrange (Given) = Preparar o teste
