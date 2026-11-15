@@ -95,9 +95,9 @@ yarn add supabase -D
 yarn supabase login
 yarn supabase link --project-ref SEU_PROJECT_ID
 
-# Aplicar migrações (cria tabelas e RLS)
-yarn supabase db push
-yarn supabase db push --password "$(cat docs/db-password.txt)"
+# Aplicar migrações no projeto linkado (cria tabelas e RLS)
+# CLI v3+ usa o stack local por padrão; --remote aponta para o projeto na nuvem
+yarn supabase db push --remote --password "$(cat docs/db-password.txt)"
 
 # Deploy das Edge Functions
 yarn supabase functions deploy
