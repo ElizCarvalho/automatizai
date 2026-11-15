@@ -26,6 +26,37 @@ test.describe('Consultar pedido', () => {
     await expect(card).toBeVisible({ timeout: 10_000 })
     await expect(card.getByText(orderCode, { exact: true })).toBeVisible()
     await expect(card.getByText('APROVADO', { exact: true })).toBeVisible()
+
+    await expect(page.getByTestId(`order-result-${orderCode}`)).toMatchAriaSnapshot(`
+      - img
+      - paragraph: Pedido
+      - paragraph: ${orderCode}
+      - img
+      - text: APROVADO
+      - img "Velô Sprint"
+      - paragraph: Modelo
+      - paragraph: Velô Sprint
+      - paragraph: Cor
+      - paragraph: Glacier Blue
+      - paragraph: Interior
+      - paragraph: cream
+      - paragraph: Rodas
+      - paragraph: aero Wheels
+      - heading "Dados do Cliente" [level=4]
+      - paragraph: Nome
+      - paragraph: Stiedemannfurt West
+      - paragraph: Email
+      - paragraph: laura.phillips@test.vn
+      - paragraph: Loja de Retirada
+      - paragraph
+      - paragraph: Data do Pedido
+      - paragraph: /\\d+\\/\\d+\\/\\d+/
+      - heading "Pagamento" [level=4]
+      - paragraph: À Vista
+      - paragraph: /R\\$ \\d+\\.\\d+,\\d+/
+      `);
+
+
   })
 
   test('deve exibir mensagem quando o pedido nao for encontrado', async ({ page }) => {
