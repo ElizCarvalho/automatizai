@@ -15,47 +15,108 @@ test.describe('Consultar pedido', () => {
 
   test('deve consultar um pedido aprovado', async ({ page }) => {
     // Arrange (Given) = Preparar o teste
-    const orderCode = 'VLO-P5VBLX'
+    const order = {
+      number: 'VLO-P5VBLX',
+      color: 'Glacier Blue',
+      wheels: 'aero Wheels',
+      customer: {
+        name: 'Stiedemannfurt West',
+        email: 'laura.phillips@test.vn',
+      },
+      payment: {
+        method: 'À Vista',
+      },
+    }
 
     // Act (When) = Executar a ação
-    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(orderCode)
+    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order.number)
     await page.getByRole('button', { name: 'Buscar Pedido' }).click()
 
     // Assert (Then) = Verificar o resultado
-    const card = page.getByTestId(`order-result-${orderCode}`)
+    const card = page.getByTestId(`order-result-${order.number}`)
     await expect(card).toBeVisible({ timeout: 10_000 })
-    await expect(card.getByText(orderCode, { exact: true })).toBeVisible()
+    await expect(card.getByText(order.number, { exact: true })).toBeVisible()
     await expect(card.getByText('APROVADO', { exact: true })).toBeVisible()
 
-    await expect(page.getByTestId(`order-result-${orderCode}`)).toMatchAriaSnapshot(`
+    await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
       - img
       - paragraph: Pedido
-      - paragraph: ${orderCode}
+      - paragraph: ${order.number}
       - img
       - text: APROVADO
       - img "Velô Sprint"
       - paragraph: Modelo
-      - paragraph: Velô Sprint
+      - paragraph: "Velô Sprint"
       - paragraph: Cor
-      - paragraph: Glacier Blue
+      - paragraph: ${order.color}
       - paragraph: Interior
-      - paragraph: cream
+      - paragraph: "cream"
       - paragraph: Rodas
-      - paragraph: aero Wheels
+      - paragraph: ${order.wheels}
       - heading "Dados do Cliente" [level=4]
       - paragraph: Nome
-      - paragraph: Stiedemannfurt West
+      - paragraph: ${order.customer.name}
       - paragraph: Email
-      - paragraph: laura.phillips@test.vn
+      - paragraph: ${order.customer.email}
       - paragraph: Loja de Retirada
-      - paragraph
+      - paragraph: "Velô Faria Lima - Av. Faria Lima, 2500"
       - paragraph: Data do Pedido
       - paragraph: /\\d+\\/\\d+\\/\\d+/
       - heading "Pagamento" [level=4]
-      - paragraph: À Vista
+      - paragraph: ${order.payment.method}
       - paragraph: /R\\$ \\d+\\.\\d+,\\d+/
       `);
 
+  })
+
+  test('deve consultar um pedido reprovado', async ({ page }) => {
+    // Arrange (Given) = Preparar o teste
+    const order = {
+      number: 'VLO-N6W15P',
+      color: 'Midnight Black',
+      wheels: 'sport Wheels',
+      customer: {
+        name: 'Missouri City Hackett',
+        email: 'anthony.torres@demo.com',
+      },
+      payment: {
+        method: 'À Vista',
+      },
+    }
+
+    // Act (When) = Executar a ação
+    await page.getByRole('textbox', { name: 'Número do Pedido' }).fill(order.number)
+    await page.getByRole('button', { name: 'Buscar Pedido' }).click()
+
+    // Assert (Then) = Verificar o resultado
+    await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
+      - img
+      - paragraph: Pedido
+      - paragraph: ${order.number}
+      - img
+      - text: REPROVADO
+      - img "Velô Sprint"
+      - paragraph: Modelo
+      - paragraph: "Velô Sprint"
+      - paragraph: Cor
+      - paragraph: ${order.color}
+      - paragraph: Interior
+      - paragraph: "cream"
+      - paragraph: Rodas
+      - paragraph: ${order.wheels}
+      - heading "Dados do Cliente" [level=4]
+      - paragraph: Nome
+      - paragraph: ${order.customer.name}
+      - paragraph: Email
+      - paragraph: ${order.customer.email}
+      - paragraph: Loja de Retirada
+      - paragraph: "Velô Morumbi - Av. Morumbi, 1500"
+      - paragraph: Data do Pedido
+      - paragraph: /\\d+\\/\\d+\\/\\d+/
+      - heading "Pagamento" [level=4]
+      - paragraph: ${order.payment.method}
+      - paragraph: /R\\$ \\d+\\.\\d+,\\d+/
+    `);
 
   })
 
