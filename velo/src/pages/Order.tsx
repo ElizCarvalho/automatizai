@@ -227,7 +227,6 @@ const Order = () => {
     if (paymentMethod === 'financiamento') {
       order.installmentValue = installmentValue;
     }
-    order.customer.store = formData.store;
 
     resetConfiguration();
     navigate('/success', { state: { order } });
